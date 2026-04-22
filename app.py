@@ -1,11 +1,20 @@
 from fastapi import FastAPI, File, UploadFile, HTTPException
 from fastapi.responses import JSONResponse, FileResponse
+from fastapi.middleware.cors import CORSMiddleware
 from pathlib import Path
 from uuid import uuid4
 import shutil
 import os
 
 app = FastAPI()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=False,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 UPLOAD_DIR = Path(os.environ.get("UPLOAD_DIR", "/data/uploads"))
 UPLOAD_DIR.mkdir(parents=True, exist_ok=True)
